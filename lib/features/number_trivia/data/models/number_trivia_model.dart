@@ -1,6 +1,7 @@
 import 'package:clear_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter/foundation.dart';
 
+
 class NumberTriviaModel extends NumberTrivia {
   NumberTriviaModel({
     required int number,
@@ -16,5 +17,9 @@ class NumberTriviaModel extends NumberTrivia {
       'number' : number
     };
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [number,text];
 }
 

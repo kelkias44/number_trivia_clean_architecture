@@ -7,6 +7,8 @@ import 'package:clear_architecture/core/errors/failure.dart';
 import 'package:clear_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:dartz/dartz.dart';
 
+import '../models/number_trivia_model.dart';
+
 typedef Future<NumberTrivia> concreteOrRandomChooser();
 class NumberTriviaRepositoriesImpl implements NumberTriviaRepository{
   final NumberTriviaLocalDataSource localDataSource;
@@ -33,12 +35,12 @@ class NumberTriviaRepositoriesImpl implements NumberTriviaRepository{
   }
 
 
-  Future<Either<Failure, NumberTrivia>> _getTrivia(
+  Future<Either<Failure, NumberTriviaModel>> _getTrivia(
     concreteOrRandomChooser getConcreteorRandom) async {
     if(await networkInfo.isConnected){
     try {
       final remoteTrivia = await getConcreteorRandom();
-      localDataSource.cacheNumberTrivia(remoteTrivia);
+      localDataSource.cacheNumberTrivia(remoteTrivia as NumberTriviaModel);
       return Right(remoteTrivia);
     } on ServerException {
       return left(ServerFailure());
